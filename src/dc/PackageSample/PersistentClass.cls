@@ -6,7 +6,7 @@ Property Test As %VarString;
 ClassMethod CreateRecord() As %Status
 {
     s objPC=..%New()
-    s objPC.Test="Test string"
+    s objPC.Test="Test string 1docker-compose build --no-cache"
     return objPC.%Save()
 }
 
