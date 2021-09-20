@@ -1,11 +1,12 @@
-## intersystems-objectscript-template
-This is a template for InterSystems ObjectScript Github repository.
-The template goes also with a few files which let you immedietly compile your ObjecScript files in InterSystems IRIS Community Edition in a docker container
+## import csv and update with SQL
+This is an example on how to import CSV data to any table using SQL.
+
+The related article is on Developer Community
 
 ## Prerequisites
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
 
-## Installation 
+## Installation with Docker
 
 Clone/git pull the repo into any local directory
 
@@ -13,52 +14,61 @@ Clone/git pull the repo into any local directory
 $ git clone https://github.com/intersystems-community/objectscript-docker-template.git
 ```
 
-Open the terminal in this directory and run:
 
-```
-$ docker-compose build
-```
-
-3. Run the IRIS container with your project:
+Open the terminal in a cloned folder and run the container with InterSystems IRIS:
 
 ```
 $ docker-compose up -d
 ```
 
-## How to Test it
+## Installation with ZPM
+
+Open IRIS terminal and run
+```
+USER>zpm "install import-csv-update-sql"
+```
+
+## How to Use it
+
+In this example we use Countries dataset and GNP dataset to change the GNP column in Countries dataset.
+we will import GNP CSV with csvgen and then run the SQL update query that will change the data in dc_data.Country class/table for the GNP values from GNP class generated from CSV.
+And then we delete GNP class.
+
 
 Open IRIS terminal:
 
 ```
 $ docker-compose exec iris iris session iris
-USER>write ##class(dc.PackageSample.ObjectScript).Test()
+USER>
 ```
-## How to start coding
-This repository is ready to code in VSCode with ObjectScript plugin.
-Install [VSCode](https://code.visualstudio.com/), [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [ObjectScript](https://marketplace.visualstudio.com/items?itemName=daimor.vscode-objectscript) plugin and open the folder in VSCode.
-Open /src/cls/PackageSample/ObjectScript.cls class and try to make changes - it will be compiled in running IRIS docker container.
-![docker_compose](https://user-images.githubusercontent.com/2781759/76656929-0f2e5700-6547-11ea-9cc9-486a5641c51d.gif)
+1. Import dataset
+2. Show the initial value
+```
+USER>zw ##class(evshvarov.csv.sqlupdate).ImportDataset()
+...
+[dataset-countries]     Activate SUCCESS
+USER>zw ##class(evshvarov.csv.sqlupdate).ShowGNP()
+Country Angola gnp=6648
+```
+3. Import CSV with the demanded data:
+```
+USER>zw ##class(evshvarov.csv.sqlupdate).ImportCSV()
+Records imported: 266
+```
+4. Change the data:
+```
+USER>zw ##class(evshvarov.csv.sqlupdate).UpdateGNP()
+Changes to GNP are made from dc.data.GNP
+USER>zw ##class(evshvarov.csv.sqlupdate).ShowGNP()
+Country Angola gnp=5734.9857372283895529
+```
+5. Delete GNP table:
+```
+USER>zw ##class(evshvarov.csv.sqlupdate).DropGNP()
+dc.data.DNP class is deleted.
+```
+Or you can run all the process with RunAll() method:
+```
+zw ##class(evshvarov.csv.sqlupdate).RunAll()
+```
 
-Feel free to delete PackageSample folder and place your ObjectScript classes in a form
-/src/Package/Classname.cls
-[Read more about folder setup for InterSystems ObjectScript](https://community.intersystems.com/post/simplified-objectscript-source-folder-structure-package-manager)
-
-The script in Installer.cls will import everything you place under /src into IRIS.
-
-
-## What's inside the repository
-
-### Dockerfile
-
-The simplest dockerfile which starts IRIS and imports code from /src folder into it.
-Use the related docker-compose.yml to easily setup additional parametes like port number and where you map keys and host folders.
-
-
-### .vscode/settings.json
-
-Settings file to let you immedietly code in VSCode with [VSCode ObjectScript plugin](https://marketplace.visualstudio.com/items?itemName=daimor.vscode-objectscript))
-
-### .vscode/launch.json
-Config file if you want to debug with VSCode ObjectScript
-
-[Read about all the files in this artilce](https://community.intersystems.com/post/dockerfile-and-friends-or-how-run-and-collaborate-objectscript-projects-intersystems-iris)
