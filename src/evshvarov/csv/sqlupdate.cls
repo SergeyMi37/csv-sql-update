@@ -18,7 +18,7 @@ ClassMethod RunAll() As %Status
 /// import from CSV and update with SQL
 ClassMethod ImportCSV() As %Status
 {
-    set sc = ##class(community.csvgen).GenerateFromURL("https://raw.githubusercontent.com/evshvarov/test-ipad/master/gnp.csv",",","dc.data.GNP")
+    set sc = ##class(community.csvgen).GenerateFromURL("https://raw.githubusercontent.com/evshvarov/csv-sql-update/master/gnp.csv",",","dc.data.GNP")
     Return sc
 }
 
