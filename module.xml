@@ -9,7 +9,8 @@
         </ModuleReference>
       </Dependencies>
       <Name>import-csv-update-sql</Name>
-      <Version>1.0.0</Version>
+      <Version>1.0.1</Version>
+      <Description>This is an example on how to import CSV data to any table using SQL</Description>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
       <Resource Name="evshvarov.csv.PKG"/>
