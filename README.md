@@ -47,8 +47,11 @@ USER>
 USER>zw ##class(evshvarov.csv.sqlupdate).ImportDataset()
 ...
 [dataset-countries]     Activate SUCCESS
+USER>zw ##class(evshvarov.csv.sqlupdate).AddGNP()
+SQLCODE=0
 USER>zw ##class(evshvarov.csv.sqlupdate).ShowGNP()
-Country Angola gnp=6648
+Country Andorra gnp=
+1
 ```
 3. Import CSV with the demanded data:
 ```
@@ -60,7 +63,8 @@ Records imported: 266
 USER>zw ##class(evshvarov.csv.sqlupdate).UpdateGNP()
 Changes to GNP are made from dc.data.GNP
 USER>zw ##class(evshvarov.csv.sqlupdate).ShowGNP()
-Country Angola gnp=5734.9857372283895529
+Country Armenia gnp=12424.5488
+1
 ```
 5. Delete GNP table:
 ```
