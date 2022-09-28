@@ -56,7 +56,8 @@ ClassMethod ShowGNP() As %Status
 {
     Set sc = $$$OK
     &sql(
-        SELECT TOP 1 name,gnp into :name,:gnp  from dc_data.Country 
+        SELECT TOP 1 name,gnp into :name,:gnp  from dc_data.Country
+	where gnp is not null 
     )
     if SQLCODE < 0 throw ##class(%Exception.SQL).CreateFromSQLCODE(SQLCODE,"Show Country GNP")
     write "Country ",name," gnp=",gnp,!
