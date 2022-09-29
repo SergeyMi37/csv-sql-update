@@ -47,25 +47,33 @@ USER>
 USER>zw ##class(evshvarov.csv.sqlupdate).ImportDataset()
 ...
 [dataset-countries]     Activate SUCCESS
+USER>zw ##class(evshvarov.csv.sqlupdate).AddGNP()
+"SQLCODE=0"
 USER>zw ##class(evshvarov.csv.sqlupdate).ShowGNP()
-Country Angola gnp=6648
+Country gnp=
+1
 ```
 3. Import CSV with the demanded data:
 ```
 USER>zw ##class(evshvarov.csv.sqlupdate).ImportCSV()
-Records imported: 266
+Class name: dc.data.GNP
+Header: "CountryName" VARCHAR(250),"CountryCode" VARCHAR(250), . . .
+Records imported: 2661
 ```
 4. Change the data:
 ```
 USER>zw ##class(evshvarov.csv.sqlupdate).UpdateGNP()
 Changes to GNP are made from dc.data.GNP
+1
 USER>zw ##class(evshvarov.csv.sqlupdate).ShowGNP()
-Country Angola gnp=5734.9857372283895529
+Country Armenia gnp=12424.5488
+1
 ```
 5. Delete GNP table:
 ```
 USER>zw ##class(evshvarov.csv.sqlupdate).DropGNP()
 dc.data.DNP class is deleted.
+1
 ```
 Or you can run all the process with RunAll() method:
 ```

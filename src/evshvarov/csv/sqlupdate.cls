@@ -6,6 +6,7 @@ ClassMethod RunAll() As %Status
 {
     Set sc = $$$OK
     zw ..ImportDataset()
+    zw ..AddGNP()
     zw ..ShowGNP()
     zw ..ImportCSV()
     zw ..UpdateGNP()
@@ -55,7 +56,8 @@ ClassMethod ShowGNP() As %Status
 {
     Set sc = $$$OK
     &sql(
-        SELECT TOP 1 name,gnp into :name,:gnp  from dc_data.Country 
+        SELECT TOP 1 name,gnp into :name,:gnp  from dc_data.Country
+	where gnp is not null 
     )
     if SQLCODE < 0 throw ##class(%Exception.SQL).CreateFromSQLCODE(SQLCODE,"Show Country GNP")
     write "Country ",name," gnp=",gnp,!
@@ -73,6 +75,12 @@ ClassMethod DropGNP() As %Status
     write "dc.data.DNP class is deleted.",!
 
     Return sc
+}
+/// column gnp is missing in imported table countries
+ClassMethod AddGNP() As %String [ PublicList = SQLCODE ]
+{
+	&SQL(ALTER TABLE dc_data.Country ADD gnp MONEY)
+	quit "SQLCODE="_SQLCODE
 }
 
 }
