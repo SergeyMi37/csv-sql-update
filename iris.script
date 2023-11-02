@@ -4,6 +4,6 @@ zn "%SYS"
 Do ##class(Security.Users).UnExpireUserPasswords("*")
 
 zn "USER"
-zpm "repo -r -n registry -url http://194.8.47.234:65092/registry/ -user ""msw"" -pass ""S37@asu3"" "
+
 zpm "load /opt/irisbuild/ -v":1:1
 halt
